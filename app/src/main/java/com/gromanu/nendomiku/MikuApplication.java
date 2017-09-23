@@ -7,8 +7,8 @@ import com.gromanu.nendomiku.controller.ImageController;
 
 public class MikuApplication extends Application {
 
-    private static String DOMAIN = "http://192.168.0.13";
-    //private static String DOMAIN = "http://gromanu.solarlogic.net";
+    //private static String DOMAIN = "http://192.168.0.13";
+    private static String DOMAIN = "http://gromanu.solarlogic.net";
 
     private final DataController dataController = new DataController(DOMAIN);
 

@@ -30,7 +30,8 @@ public class MikuActivity extends Activity implements DataController.DataControl
 
         itemsContainer = (ViewGroup) findViewById(R.id.items_list);
         itemsCount = (TextView) findViewById(R.id.counter);
-
+        // TODO this is the start line. The end line is in the onImageReceived() method in onCreateNewItemLine().
+        // TODO on a separate sheet of paper make a chronological and threaded list of all the methods called (only the methods from our project classes, not the android native methods)
         ((MikuApplication)getApplication()).getDataController().fetchData(this);
     }
 
@@ -78,6 +79,7 @@ public class MikuActivity extends Activity implements DataController.DataControl
                         imageView.setImageBitmap(image);
                         imageView.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.INVISIBLE);
+                        //TODO end line
                     }
                 });
             }

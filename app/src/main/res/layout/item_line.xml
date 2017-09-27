@@ -11,12 +11,19 @@
         android:layout_margin="8dp"
         android:layout_centerVertical="true"
         >
+        <Button
+            android:id="@+id/image_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="show image"/>
+
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
             />
+
         <ProgressBar
             android:id="@+id/image_progress"
             android:layout_width="match_parent"

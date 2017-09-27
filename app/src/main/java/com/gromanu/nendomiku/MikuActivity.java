@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,8 +57,8 @@ public class MikuActivity extends Activity implements DataController.DataControl
         showError(e);
     }
 
-    private View createNewItemLine(LayoutInflater inflater, MikuItem item) {
-        View newLine = inflater.inflate(R.layout.item_line, itemsContainer, false);
+    private View createNewItemLine(LayoutInflater inflater, final MikuItem item) {
+        final View newLine = inflater.inflate(R.layout.item_line, itemsContainer, false);
 
         TextView label = (TextView) newLine.findViewById(R.id.name);
         label.setText(getString(R.string.item_label, item.getNumber(), item.getName()));
@@ -65,20 +66,45 @@ public class MikuActivity extends Activity implements DataController.DataControl
         TextView price = (TextView) newLine.findViewById(R.id.price);
         price.setText(getString(R.string.item_price, item.getPrice()));
 
+        final Button button = (Button) newLine.findViewById(R.id.image_button);
+        //button.setVisibility(View.VISIBLE);
+
+
+        /*
+        button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
+                //action here
+
+
+            }
+        });
+        */
+
+
+
+
         final ImageView imageView = (ImageView) newLine.findViewById(R.id.image);
         final View progressBar = newLine.findViewById(R.id.image_progress);
-        imageView.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.VISIBLE);
+        imageView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
 
+
+        //onclick listener
+        button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view) {
         ((MikuApplication)getApplication()).getImageController().fetchImage(item.getPictureURL(), new ImageController.ImageControllerCallback() {
             @Override
             public void onImageReceived(final Bitmap image) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
                         imageView.setImageBitmap(image);
+
                         imageView.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.INVISIBLE);
+                        button.setVisibility(View.INVISIBLE);
+
                         //TODO end line
                     }
                 });
@@ -89,8 +115,12 @@ public class MikuActivity extends Activity implements DataController.DataControl
                 showError(e);
             }
         });
+            }
+        });
         return newLine;
+
     }
+
 
     private void showError(final Exception e) {
         runOnUiThread(new Runnable() {

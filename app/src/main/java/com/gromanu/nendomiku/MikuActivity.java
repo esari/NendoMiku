@@ -67,54 +67,42 @@ public class MikuActivity extends Activity implements DataController.DataControl
         price.setText(getString(R.string.item_price, item.getPrice()));
 
         final Button button = (Button) newLine.findViewById(R.id.image_button);
-        //button.setVisibility(View.VISIBLE);
-
-
-        /*
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-                //action here
-
-
-            }
-        });
-        */
-
-
-
 
         final ImageView imageView = (ImageView) newLine.findViewById(R.id.image);
         final View progressBar = newLine.findViewById(R.id.image_progress);
-        imageView.setVisibility(View.VISIBLE);
+        imageView.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
+
 
 
         //onclick listener
         button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view) {
-        ((MikuApplication)getApplication()).getImageController().fetchImage(item.getPictureURL(), new ImageController.ImageControllerCallback() {
-            @Override
-            public void onImageReceived(final Bitmap image) {
-                runOnUiThread(new Runnable() {
+                button.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
+
+                ((MikuApplication)getApplication()).getImageController().fetchImage(item.getPictureURL(), new ImageController.ImageControllerCallback() {
                     @Override
-                    public void run() {
+                    public void onImageReceived(final Bitmap image) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 
-                        imageView.setImageBitmap(image);
 
-                        imageView.setVisibility(View.VISIBLE);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        button.setVisibility(View.INVISIBLE);
+                                imageView.setImageBitmap(image);
+                                imageView.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.INVISIBLE);
 
-                        //TODO end line
+                                //TODO end line
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onImageError(Exception e) {
+                        showError(e);
                     }
                 });
-            }
-
-            @Override
-            public void onImageError(Exception e) {
-                showError(e);
-            }
-        });
             }
         });
         return newLine;

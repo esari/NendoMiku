@@ -3,6 +3,7 @@ package com.gromanu.nendomiku.controller;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.view.View;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -53,6 +54,7 @@ public class ImageController {
     private Bitmap getImage(String url) throws IOException {
         try {
             Thread.sleep(1000);
+            //progressBar.setVisibility(View.VISIBLE);
         } catch (InterruptedException e) {}
 
         Request request = new Request.Builder().url(url).get().build();

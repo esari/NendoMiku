@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Nendo.iml" filepath="$PROJECT_DIR$/Nendo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/NendoMiku.iml" filepath="$PROJECT_DIR$/NendoMiku.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

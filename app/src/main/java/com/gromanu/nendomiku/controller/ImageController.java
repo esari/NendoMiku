@@ -51,6 +51,10 @@ public class ImageController {
     }
 
     private Bitmap getImage(String url) throws IOException {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {}
+
         Request request = new Request.Builder().url(url).get().build();
         Response response = client.newCall(request).execute();
 

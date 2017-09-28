@@ -10,32 +10,51 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gromanu.nendomiku.controller.DataController;
 import com.gromanu.nendomiku.controller.ImageController;
 import com.gromanu.nendomiku.model.MikuItem;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.button;
 
 public class MikuActivity extends Activity implements DataController.DataControllerCallback {
 
     private ViewGroup itemsContainer;
     private TextView itemsCount;
 
+    private MikuAdapter mikuAdapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.main);
 
+        //TODO 4: Find a reference to the {@link ListView} in the layout
+        ListView mikuListView = (ListView) findViewById(R.id.items_list);
+
+        //TODO 5: Create a new adapter that takes an empty list of nendoMiku as input
+        mikuAdapter = new MikuAdapter(this, new ArrayList<MikuItem>());
+
+        // this part should be move to ViewAdapter class ?
         itemsContainer = (ViewGroup) findViewById(R.id.items_list);
         itemsCount = (TextView) findViewById(R.id.counter);
-        // TODO this is the start line. The end line is in the onImageReceived() method in onCreateNewItemLine().
-        // TODO on a separate sheet of paper make a chronological and threaded list of all the methods called (only the methods from our project classes, not the android native methods)
+
+
+
+        //TODO 6: Set the adapter on the {@link ListView} then put it inside the UiThread, so the list can be populated in the user interface
+
+        mikuListView.setAdapter(mikuAdapter);
+        //TODO 7: Start to fetch the nendoMiku data
         ((MikuApplication)getApplication()).getDataController().fetchData(this);
     }
 
+    //TODO 8: Save only the itemsCount.setText, then adding the viewAdapter after it
+    // by looking at the onPostExcecute () method
     @Override
     public void onDataReceived(final List<MikuItem> itemsList) {
         runOnUiThread(new Runnable() {
@@ -43,10 +62,13 @@ public class MikuActivity extends Activity implements DataController.DataControl
             public void run() {
                 itemsCount.setText(getString(R.string.count, itemsList.size()));
 
-                itemsContainer.removeAllViews();
-                LayoutInflater inflater = LayoutInflater.from(MikuActivity.this);
-                for (MikuItem item: itemsList) {
-                    itemsContainer.addView(createNewItemLine(inflater, item));
+                //Clear the adapter from the previous miku itemList
+                mikuAdapter.clear();
+
+                //if there is a valid list of {@link MikuItem)s, then add them to adapter
+                //data set . This will trigger the ListView to update
+                if (itemsList !=null && !itemsList.isEmpty()){
+                    mikuAdapter.addAll(itemsList);
                 }
             }
         });
@@ -57,57 +79,18 @@ public class MikuActivity extends Activity implements DataController.DataControl
         showError(e);
     }
 
-    private View createNewItemLine(LayoutInflater inflater, final MikuItem item) {
-        final View newLine = inflater.inflate(R.layout.item_line, itemsContainer, false);
-
-        TextView label = (TextView) newLine.findViewById(R.id.name);
-        label.setText(getString(R.string.item_label, item.getNumber(), item.getName()));
-
-        TextView price = (TextView) newLine.findViewById(R.id.price);
-        price.setText(getString(R.string.item_price, item.getPrice()));
-
-        final Button button = (Button) newLine.findViewById(R.id.image_button);
-
-        final ImageView imageView = (ImageView) newLine.findViewById(R.id.image);
-        final View progressBar = newLine.findViewById(R.id.image_progress);
-        imageView.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.INVISIBLE);
+    //TODO 1: Create ViewAdapter class and put this methode on it
+    //TODO 2: Replace View Newline with View listItemView
+    //TODO 3: Replace object newLine with listItemView
 
 
 
-        //onclick listener
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view) {
-                button.setVisibility(View.INVISIBLE);
-                progressBar.setVisibility(View.VISIBLE);
-
-                ((MikuApplication)getApplication()).getImageController().fetchImage(item.getPictureURL(), new ImageController.ImageControllerCallback() {
-                    @Override
-                    public void onImageReceived(final Bitmap image) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
 
 
-                                imageView.setImageBitmap(image);
-                                imageView.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.INVISIBLE);
+        // TODO 9: Set an item click listener on the ListView, to open a selected miku image.
 
-                                //TODO end line
-                            }
-                        });
-                    }
 
-                    @Override
-                    public void onImageError(Exception e) {
-                        showError(e);
-                    }
-                });
-            }
-        });
-        return newLine;
 
-    }
 
 
     private void showError(final Exception e) {

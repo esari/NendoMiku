@@ -59,7 +59,9 @@ public class MikuAdapter extends ArrayAdapter<MikuItem> {
         label.setText(getContext().getString(R.string.item_label, currentItem.getNumber(), currentItem.getName()));
 
         TextView price = (TextView) listItemView.findViewById(R.id.price);
-        price.setText(getContext().getString(R.string.item_price, currentItem.getPrice()));
+        //price.setText(String.format("%s",getContext().getString(R.string.item_price, currentItem.getPrice())));
+
+        price.setText(currentItem.getPrice());
 
         final Button button = (Button) listItemView.findViewById(R.id.image_button);
 

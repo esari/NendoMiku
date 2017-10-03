@@ -2,7 +2,7 @@
     <string name="app_name">Nendo Miku</string>
     <string name="app_name_color"><font color='#ffff860d'>Nendo</font> <font color='#ff15a6b7'>Miku</font></string>
     <string name="count">%d Miku found</string>
-    <string name="item_price">%dJPY</string>
+    <string name="item_price">%s</string>
     <string name="item_label">#%1$d. %2$s</string>
     <string name="error_title">ERROR</string>
 </resources>

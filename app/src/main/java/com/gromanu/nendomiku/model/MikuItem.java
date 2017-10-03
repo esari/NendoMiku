@@ -2,6 +2,8 @@ package com.gromanu.nendomiku.model;
 
 import com.google.gson.annotations.SerializedName;
 
+
+
 public class MikuItem {
 
     @SerializedName("num")
@@ -14,7 +16,7 @@ public class MikuItem {
     private String releaseDate;
 
     @SerializedName("price")
-    private int price;
+    private String price;
 
     @SerializedName("ex")
     private boolean exclusive;
@@ -30,7 +32,7 @@ public class MikuItem {
         return name;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 

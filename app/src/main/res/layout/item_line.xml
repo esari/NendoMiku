@@ -24,6 +24,15 @@
             android:scaleType="fitCenter"
             />
 
+        <ImageView
+            android:id="@+id/image_limited"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
+            android:layout_gravity="bottom|left"
+            android:src ="@drawable/exclusive"
+            android:visibility="gone"
+            />
+
         <ProgressBar
             android:id="@+id/image_progress"
             android:layout_width="match_parent"

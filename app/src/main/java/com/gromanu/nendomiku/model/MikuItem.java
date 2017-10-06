@@ -39,4 +39,6 @@ public class MikuItem {
     public String getPictureURL() {
         return pictureURL;
     }
+
+    public boolean getExclusive() { return exclusive;}
 }
